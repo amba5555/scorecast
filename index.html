@@ -1,284 +1,245 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<!-- Chosen Palette: Tiered Feedback Palette (Blue for Excellent, Green for Good, Teal for Pass, Yellow for Encouragement) -->
+<!-- Application Structure Plan: The two-stage structure is maintained. The 'Results View' is further refined to create a stronger visual hierarchy. It now features a large, central 'Overall Score' block as the primary focal point, containing the numeric score and a larger, more prominent progress gauge. This is flanked by the top-level status card (now with 4 tiers of feedback) and the secondary sub-score cards at the bottom. This structure immediately draws the user's eye to the most critical number (the total score) while providing layered context through the status message and detailed breakdown, enhancing clarity and impact. -->
+<!-- Visualization & Content Choices: Report Info: Student scores with a tiered evaluation logic (Excellent >=8, Good >=6, Pass >=5). Goal: To deliver nuanced, hierarchical feedback that emphasizes the overall achievement while providing clear context. Viz/Presentation Method: 1) The 'Status Card' is enhanced with 4 conditional states (text, icons: 🎉, 👍, ✅, 📖) for nuanced feedback. 2) The 'Overall Score' is now the hero element with a massive font size. 3) The 'Progress Gauge' is made physically larger (thicker) and uses tiered colors to reflect the achievement level. 4) Sub-score cards are visually de-emphasized with smaller text to support the hierarchy. Interaction: The entire results view's theme (colors, icons, text) dynamically adapts to one of the four performance tiers upon data fetch. Justification: This hierarchical design is more effective as it guides the user's attention from the most important summary (overall score) to the qualitative feedback (status) and finally to the details (sub-scores), creating a more intuitive and impactful user experience. Library/Method: Vanilla JS, Tailwind CSS. Chart.js removed as it's no longer used. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<html lang="th">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #4689cc; -webkit-text-stroke: #4689cc}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6d7378; -webkit-text-stroke: #6d7378}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6d7378; -webkit-text-stroke: #6d7378; background-color: #171818}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #8cd3fe; -webkit-text-stroke: #8cd3fe}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #c27e65; -webkit-text-stroke: #c27e65}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #cacaca; -webkit-text-stroke: #cacaca}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #cacaca; -webkit-text-stroke: #cacaca; min-height: 16.0px}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #71c083; -webkit-text-stroke: #71c083}
-    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #36c0a0; -webkit-text-stroke: #36c0a0}
-    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #4689cc; -webkit-text-stroke: #4689cc; background-color: #171818}
-    span.s1 {font-kerning: none; background-color: #171818}
-    span.s2 {font-kerning: none; color: #8cd3fe; background-color: #171818; -webkit-text-stroke: 0px #8cd3fe}
-    span.s3 {font-kerning: none}
-    span.s4 {font-kerning: none; color: #6d6d6d; background-color: #171818; -webkit-text-stroke: 0px #6d6d6d}
-    span.s5 {font-kerning: none; color: #cacaca; background-color: #171818; -webkit-text-stroke: 0px #cacaca}
-    span.s6 {font-kerning: none; color: #c27e65; background-color: #171818; -webkit-text-stroke: 0px #c27e65}
-    span.s7 {font-kerning: none; color: #4689cc; background-color: #171818; -webkit-text-stroke: 0px #4689cc}
-    span.s8 {font-kerning: none; color: #d4d4d4; background-color: #171818; -webkit-text-stroke: 0px #d4d4d4}
-    span.s9 {font-kerning: none; color: #71c083; background-color: #171818; -webkit-text-stroke: 0px #71c083}
-    span.s10 {font-kerning: none; color: #a7c598; background-color: #171818; -webkit-text-stroke: 0px #a7c598}
-    span.s11 {font-kerning: none; color: #6d7378; background-color: #171818; -webkit-text-stroke: 0px #6d7378}
-    span.s12 {font-kerning: none; color: #b76ff7; background-color: #171818; -webkit-text-stroke: 0px #b76ff7}
-    span.s13 {font-kerning: none; color: #36c0a0; background-color: #171818; -webkit-text-stroke: 0px #36c0a0}
-    span.s14 {font-kerning: none; color: #f67c30; background-color: #171818; -webkit-text-stroke: 0px #f67c30}
-    span.s15 {font-kerning: none; color: #6d6d6d; -webkit-text-stroke: 0px #6d6d6d}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายงานผลการเรียน</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #F8F9FA;
+        }
+        .btn {
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+    </style>
 </head>
-<body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE</span><span class="s2"> html</span><span class="s1">&gt;</span></p>
-<p class="p2"><span class="s1">&lt;!-- Chosen Palette: Tiered Feedback Palette (Blue for Excellent, Green for Good, Teal for Pass, Yellow for Encouragement) --&gt;</span></p>
-<p class="p2"><span class="s1">&lt;!-- Application Structure Plan: The two-stage structure is maintained. The 'Results View' is further refined to create a stronger visual hierarchy. It now features a large, central 'Overall Score' block as the primary focal point, containing the numeric score and a larger, more prominent progress gauge. This is flanked by the top-level status card (now with 4 tiers of feedback) and the secondary sub-score cards at the bottom. This structure immediately draws the user's eye to the most critical number (the total score) while providing layered context through the status message and detailed breakdown, enhancing clarity and impact. --&gt;</span></p>
-<p class="p3"><span class="s3">&lt;!-- Visualization &amp; Content Choices: Report Info: Student scores with a tiered evaluation logic (Excellent &gt;=8, Good &gt;=6, Pass &gt;=5). Goal: To deliver nuanced, hierarchical feedback that emphasizes the overall achievement while providing clear context. Viz/Presentation Method: 1) The 'Status Card' is enhanced with 4 conditional states (text, icons: 🎉, 👍, ✅, 📖) for nuanced feedback. 2) The 'Overall Score' is now the hero element with a massive font size. 3) The 'Progress Gauge' is made physically larger (thicker) and uses tiered colors to reflect the achievement level. 4) Sub-score cards are visually de-emphasized with smaller text to support the hierarchy. Interaction: The entire results view's theme (colors, icons, text) dynamically adapts to one of the four performance tiers upon data fetch. Justification: This hierarchical design is more effective as it guides the user's attention from the most important summary (overall score) to the qualitative feedback (status) and finally to the details (sub-scores), creating a more intuitive and impactful user experience. Library/Method: Vanilla JS, Tailwind CSS. Chart.js removed as it's no longer used. --&gt;</span></p>
-<p class="p2"><span class="s1">&lt;!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. --&gt;</span></p>
-<p class="p1"><span class="s4">&lt;</span><span class="s1">html</span><span class="s5"> </span><span class="s2">lang</span><span class="s4">=</span><span class="s6">"th"</span><span class="s4">&gt;</span></p>
-<p class="p1"><span class="s4">&lt;</span><span class="s1">head</span><span class="s4">&gt;</span></p>
-<p class="p4"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;</span><span class="s7">meta</span><span class="s5"> </span><span class="s1">charset</span><span class="s4">=</span><span class="s6">"UTF-8"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;</span><span class="s7">meta</span><span class="s5"> </span><span class="s2">name</span><span class="s4">=</span><span class="s1">"viewport"</span><span class="s5"> </span><span class="s2">content</span><span class="s4">=</span><span class="s1">"width=device-width, initial-scale=1.0"</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;</span><span class="s7">title</span><span class="s4">&gt;</span><span class="s1">รายงานผลการเรียน</span><span class="s4">&lt;/</span><span class="s7">title</span><span class="s4">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;</span><span class="s7">script</span><span class="s5"> </span><span class="s2">src</span><span class="s4">=</span><span class="s1">"https://cdn.tailwindcss.com"</span><span class="s4">&gt;&lt;/</span><span class="s7">script</span><span class="s4">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;</span><span class="s7">link</span><span class="s5"> </span><span class="s2">rel</span><span class="s4">=</span><span class="s1">"preconnect"</span><span class="s5"> </span><span class="s2">href</span><span class="s4">=</span><span class="s1">"https://fonts.googleapis.com"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;</span><span class="s7">link</span><span class="s5"> </span><span class="s2">rel</span><span class="s4">=</span><span class="s1">"preconnect"</span><span class="s5"> </span><span class="s2">href</span><span class="s4">=</span><span class="s1">"https://fonts.gstatic.com"</span><span class="s5"> </span><span class="s2">crossorigin</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;</span><span class="s7">link</span><span class="s5"> </span><span class="s2">href</span><span class="s4">=</span><span class="s1">"https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&amp;display=swap"</span><span class="s5"> </span><span class="s2">rel</span><span class="s4">=</span><span class="s1">"stylesheet"</span><span class="s4">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;</span><span class="s1">style</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">body</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-family:</span><span class="s1"> </span><span class="s9">'Sarabun'</span><span class="s8">,</span><span class="s1"> </span><span class="s6">sans-serif</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #F8F9FA</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">.btn</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s5"> </span><span class="s1">background-color</span><span class="s5"> </span><span class="s10">0.2s</span><span class="s5"> </span><span class="s1">ease-in-out</span><span class="s8">,</span><span class="s5"> </span><span class="s1">transform</span><span class="s5"> </span><span class="s10">0.1s</span><span class="s5"> </span><span class="s1">ease-in-out</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.btn:active</span><span class="s5"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transform:</span><span class="s1"> </span><span class="s6">scale(</span><span class="s10">0.98</span><span class="s6">)</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;/</span><span class="s1">style</span><span class="s4">&gt;</span></p>
-<p class="p1"><span class="s4">&lt;/</span><span class="s1">head</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s4">&lt;</span><span class="s7">body</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-gray-800"</span><span class="s4">&gt;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"min-h-screen flex flex-col items-center justify-center p-4"</span><span class="s4">&gt;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">&lt;!-- View 1: Lookup Form --&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"lookup-view"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"w-full max-w-md"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"bg-white p-8 md:p-10 rounded-xl shadow-sm border border-gray-200"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-center mb-8"</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">h1</span><span class="s1"> </span><span class="s2">class</span><span class="s4">=</span><span class="s6">"text-3xl font-bold text-gray-900"</span><span class="s4">&gt;</span><span class="s1">ตรวจสอบผลการเรียน</span><span class="s4">&lt;/</span><span class="s7">h1</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">p</span><span class="s1"> </span><span class="s2">class</span><span class="s4">=</span><span class="s6">"text-gray-500 mt-2"</span><span class="s4">&gt;</span><span class="s1">กรุณากรอกรหัสประจำตัวเพื่อดูผลคะแนนของคุณ</span><span class="s4">&lt;/</span><span class="s7">p</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s1"> </span><span class="s2">class</span><span class="s4">=</span><span class="s6">"space-y-4"</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s4">&lt;</span><span class="s7">label</span><span class="s1"> </span><span class="s2">for</span><span class="s4">=</span><span class="s6">"studentIdInput"</span><span class="s1"> </span><span class="s2">class</span><span class="s4">=</span><span class="s6">"sr-only"</span><span class="s4">&gt;</span><span class="s1">รหัสประจำตัว</span><span class="s4">&lt;/</span><span class="s7">label</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s4">&lt;</span><span class="s7">input</span><span class="s5"> </span><span class="s2">type</span><span class="s4">=</span><span class="s1">"text"</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"studentIdInput"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"w-full text-center text-lg p-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition"</span><span class="s5"> </span><span class="s2">placeholder</span><span class="s4">=</span><span class="s1">"กรอกรหัสที่นี่"</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">button</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"checkScoreBtn"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"w-full py-3 px-4 bg-blue-600 text-white font-bold text-lg rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 btn"</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                        </span>แสดงผลคะแนน</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;/</span><span class="s7">button</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"errorMessage"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"mt-4 text-center text-red-600 font-semibold"</span><span class="s4">&gt;&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">&lt;!-- View 2: Results Dashboard --&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"results-view"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"w-full max-w-lg hidden"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">             </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-200"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-center mb-4"</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">p</span><span class="s1"> </span><span class="s2">class</span><span class="s4">=</span><span class="s6">"text-gray-500"</span><span class="s4">&gt;</span><span class="s1">ผลการเรียนของ</span><span class="s4">&lt;/</span><span class="s7">p</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">h2</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"studentName"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-3xl font-bold text-gray-800 mt-1"</span><span class="s4">&gt;&lt;/</span><span class="s7">h2</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s1">&lt;!-- Status Card --&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"status-card"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"p-4 rounded-lg text-center mb-6 transition-colors duration-500"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">p</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"status-icon"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-3xl"</span><span class="s4">&gt;&lt;/</span><span class="s7">p</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">p</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"status-text"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-xl font-bold mt-1"</span><span class="s4">&gt;&lt;/</span><span class="s7">p</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">p</span><span class="s1"> </span><span class="s2">id</span><span class="s4">=</span><span class="s6">"status-desc"</span><span class="s1"> </span><span class="s2">class</span><span class="s4">=</span><span class="s6">"text-sm"</span><span class="s4">&gt;&lt;/</span><span class="s7">p</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s1">&lt;!-- Overall Score Section --&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-center my-6"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">p</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-lg font-semibold text-gray-600"</span><span class="s4">&gt;</span><span class="s5">คะแนนรวม</span><span class="s4">&lt;/</span><span class="s7">p</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">p</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"overallScoreText"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-6xl font-extrabold text-gray-800"</span><span class="s4">&gt;&lt;/</span><span class="s7">p</span><span class="s4">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">&lt;!-- Gauge --&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"w-full bg-gray-200 rounded-full h-8 relative mt-3"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"score-bar"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"h-8 rounded-full transition-all duration-1000 ease-out"</span><span class="s4">&gt;&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"absolute top-0 bottom-0 border-l-2 border-gray-400 border-dashed"</span><span class="s5"> </span><span class="s2">style</span><span class="s4">=</span><span class="s1">"left: 50%;"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                             </span></span><span class="s4">&lt;</span><span class="s7">span</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"absolute -bottom-6 text-xs font-semibold text-gray-500"</span><span class="s5"> </span><span class="s2">style</span><span class="s4">=</span><span class="s1">"left: -18px;"</span><span class="s4">&gt;</span><span class="s5">ผ่านครึ่ง</span><span class="s4">&lt;/</span><span class="s7">span</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s1">&lt;!-- Sub Scores --&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"mt-8 grid grid-cols-2 gap-4"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"p-4 bg-gray-100 rounded-lg text-center border"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s4">&lt;</span><span class="s7">p</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-md font-semibold text-gray-600"</span><span class="s4">&gt;</span><span class="s5">คะแนนปรนัย</span><span class="s4">&lt;/</span><span class="s7">p</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s4">&lt;</span><span class="s7">p</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"objScore"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-2xl font-bold text-gray-800 mt-1"</span><span class="s4">&gt;&lt;/</span><span class="s7">p</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"p-4 bg-gray-100 rounded-lg text-center border"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s4">&lt;</span><span class="s7">p</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-md font-semibold text-gray-600"</span><span class="s4">&gt;</span><span class="s5">คะแนนอัตนัย</span><span class="s4">&lt;/</span><span class="s7">p</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s4">&lt;</span><span class="s7">p</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"subScore"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"text-2xl font-bold text-gray-800 mt-1"</span><span class="s4">&gt;&lt;/</span><span class="s7">p</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;</span><span class="s7">div</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"mt-8 text-center"</span><span class="s4">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;</span><span class="s7">button</span><span class="s5"> </span><span class="s2">id</span><span class="s4">=</span><span class="s1">"searchAgainBtn"</span><span class="s5"> </span><span class="s2">class</span><span class="s4">=</span><span class="s1">"py-2 px-6 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 btn"</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                        </span>ค้นหาอีกครั้ง</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s4">&lt;/</span><span class="s7">button</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;/</span><span class="s7">div</span><span class="s4">&gt;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;</span><span class="s1">script</span><span class="s4">&gt;</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s5"> </span><span class="s13">SCRIPT_URL</span><span class="s5"> </span><span class="s8">=</span><span class="s5"> </span><span class="s1">'https://script.google.com/macros/s/AKfycbySoCLTmYtHZEdfDZY_nbjPtZSpSMfxN-J_ZYRP6HBY3NmixeKgoH8JfZ7utIMDIO_P/exec'</span><span class="s8">;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">// Views</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> lookupView </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'lookup-view'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> resultsView </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'results-view'</span><span class="s8">);</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">// Lookup Elements</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> studentIdInput </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'studentIdInput'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> checkScoreBtn </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'checkScoreBtn'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> errorMessage </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'errorMessage'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> searchAgainBtn </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'searchAgainBtn'</span><span class="s8">);</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">// Results Elements</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> studentNameEl </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'studentName'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> statusCard </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'status-card'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> statusIcon </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'status-icon'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> statusText </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'status-text'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> statusDesc </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'status-desc'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> overallScoreText </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'overallScoreText'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> scoreBar </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'score-bar'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> objScoreEl </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'objScore'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> subScoreEl </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s9">'subScore'</span><span class="s8">);</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span>checkScoreBtn</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'click'</span><span class="s8">,</span><span class="s1"> handleFetchData</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span>studentIdInput</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'keyup'</span><span class="s8">,</span><span class="s1"> </span><span class="s8">(</span><span class="s1">event</span><span class="s8">)</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{</span><span class="s1"> </span><span class="s12">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">event</span><span class="s8">.</span><span class="s1">key </span><span class="s8">===</span><span class="s1"> </span><span class="s9">'Enter'</span><span class="s8">)</span><span class="s1"> handleFetchData</span><span class="s8">();</span><span class="s1"> </span><span class="s8">});</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span>searchAgainBtn</span><span class="s8">.</span><span class="s1">addEventListener</span><span class="s8">(</span><span class="s9">'click'</span><span class="s8">,</span><span class="s1"> resetView</span><span class="s8">);</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">function</span><span class="s1"> resetView</span><span class="s8">()</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>resultsView</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">add</span><span class="s8">(</span><span class="s9">'hidden'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>lookupView</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">remove</span><span class="s8">(</span><span class="s9">'hidden'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>studentIdInput</span><span class="s8">.</span><span class="s1">value </span><span class="s8">=</span><span class="s1"> </span><span class="s9">''</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>errorMessage</span><span class="s8">.</span><span class="s1">textContent </span><span class="s8">=</span><span class="s1"> </span><span class="s9">''</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">function</span><span class="s1"> handleFetchData</span><span class="s8">()</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> studentId </span><span class="s8">=</span><span class="s1"> studentIdInput</span><span class="s8">.</span><span class="s1">value</span><span class="s8">.</span><span class="s1">trim</span><span class="s8">();</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">if</span><span class="s1"> </span><span class="s8">(!</span><span class="s1">studentId</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span>errorMessage</span><span class="s8">.</span><span class="s1">textContent </span><span class="s8">=</span><span class="s1"> </span><span class="s9">'กรุณากรอกรหัสประจำตัว'</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">return</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>fetchData</span><span class="s8">(</span><span class="s1">studentId</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">async</span><span class="s1"> </span><span class="s12">function</span><span class="s1"> fetchData</span><span class="s8">(</span><span class="s1">studentId</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>checkScoreBtn</span><span class="s8">.</span><span class="s1">disabled </span><span class="s8">=</span><span class="s1"> </span><span class="s12">true</span><span class="s8">;</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">            </span>checkScoreBtn</span><span class="s8">.</span><span class="s5">innerHTML </span><span class="s8">=</span><span class="s5"> </span><span class="s1">`&lt;div class="flex items-center justify-center"&gt;&lt;div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"&gt;&lt;/div&gt;กำลังตรวจสอบ...&lt;/div&gt;`</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>errorMessage</span><span class="s8">.</span><span class="s1">textContent </span><span class="s8">=</span><span class="s1"> </span><span class="s9">''</span><span class="s8">;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">try</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">const</span><span class="s1"> response </span><span class="s8">=</span><span class="s1"> </span><span class="s12">await</span><span class="s1"> fetch</span><span class="s8">(</span><span class="s9">`</span><span class="s8">${</span><span class="s13">SCRIPT_URL</span><span class="s8">}</span><span class="s9">?id=</span><span class="s8">${</span><span class="s1">studentId</span><span class="s8">}</span><span class="s9">`</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">const</span><span class="s1"> result </span><span class="s8">=</span><span class="s1"> </span><span class="s12">await</span><span class="s1"> response</span><span class="s8">.</span><span class="s1">json</span><span class="s8">();</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">result</span><span class="s8">.</span><span class="s1">error</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>displayError</span><span class="s8">(</span><span class="s1">result</span><span class="s8">.</span><span class="s1">error</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">}</span><span class="s1"> </span><span class="s12">else</span><span class="s1"> </span><span class="s12">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">result</span><span class="s8">.</span><span class="s1">data</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>displayResult</span><span class="s8">(</span><span class="s1">result</span><span class="s8">.</span><span class="s1">data</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">}</span><span class="s1"> </span><span class="s12">else</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>displayError</span><span class="s8">(</span><span class="s9">'ไม่พบข้อมูลสำหรับรหัสนี้'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">}</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span><span class="s1"> </span><span class="s12">catch</span><span class="s1"> </span><span class="s8">(</span><span class="s1">error</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">                </span>displayError</span><span class="s8">(</span><span class="s1">'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span><span class="s1"> </span><span class="s12">finally</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span>checkScoreBtn</span><span class="s8">.</span><span class="s1">disabled </span><span class="s8">=</span><span class="s1"> </span><span class="s12">false</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span>checkScoreBtn</span><span class="s8">.</span><span class="s1">innerHTML </span><span class="s8">=</span><span class="s1"> </span><span class="s9">'แสดงผลคะแนน'</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">function</span><span class="s1"> displayError</span><span class="s8">(</span><span class="s1">message</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>errorMessage</span><span class="s8">.</span><span class="s1">textContent </span><span class="s8">=</span><span class="s1"> message</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">function</span><span class="s1"> displayResult</span><span class="s8">(</span><span class="s1">data</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p9"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s5"> </span><span class="s1">MAX_OBJ</span><span class="s5"> </span><span class="s8">=</span><span class="s5"> </span><span class="s14">5</span><span class="s8">,</span><span class="s5"> </span><span class="s1">MAX_SUB</span><span class="s5"> </span><span class="s8">=</span><span class="s5"> </span><span class="s14">5</span><span class="s8">,</span><span class="s5"> </span><span class="s1">MAX_OVERALL</span><span class="s5"> </span><span class="s8">=</span><span class="s5"> </span><span class="s14">10</span><span class="s8">;</span></p>
-<p class="p9"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s5"> </span><span class="s1">EXCELLENT_SCORE</span><span class="s5"> </span><span class="s8">=</span><span class="s5"> </span><span class="s14">8</span><span class="s8">,</span><span class="s5"> </span><span class="s1">GOOD_SCORE</span><span class="s5"> </span><span class="s8">=</span><span class="s5"> </span><span class="s14">6</span><span class="s8">,</span><span class="s5"> </span><span class="s1">PASS_SCORE</span><span class="s5"> </span><span class="s8">=</span><span class="s5"> </span><span class="s14">5</span><span class="s8">;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> objScore </span><span class="s8">=</span><span class="s1"> </span><span class="s13">Number</span><span class="s8">(</span><span class="s1">data</span><span class="s8">.</span><span class="s1">obj</span><span class="s8">)</span><span class="s1"> </span><span class="s8">||</span><span class="s1"> </span><span class="s14">0</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> subScore </span><span class="s8">=</span><span class="s1"> </span><span class="s13">Number</span><span class="s8">(</span><span class="s1">data</span><span class="s8">.</span><span class="s1">sub</span><span class="s8">)</span><span class="s1"> </span><span class="s8">||</span><span class="s1"> </span><span class="s14">0</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> overallScore </span><span class="s8">=</span><span class="s1"> </span><span class="s13">Number</span><span class="s8">(</span><span class="s1">data</span><span class="s8">.</span><span class="s1">overall</span><span class="s8">)</span><span class="s1"> </span><span class="s8">||</span><span class="s1"> </span><span class="s14">0</span><span class="s8">;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">// Update Name</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>studentNameEl</span><span class="s8">.</span><span class="s1">textContent </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">data</span><span class="s8">.</span><span class="s1">name </span><span class="s8">||</span><span class="s1"> </span><span class="s9">''</span><span class="s8">}</span><span class="s9"> </span><span class="s8">${</span><span class="s1">data</span><span class="s8">.</span><span class="s1">last </span><span class="s8">||</span><span class="s1"> </span><span class="s9">''</span><span class="s8">}</span><span class="s9">`</span><span class="s8">;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">// Tiered Feedback Logic</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">let</span><span class="s1"> statusInfo </span><span class="s8">=</span><span class="s1"> </span><span class="s8">{};</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">overallScore </span><span class="s8">&gt;=</span><span class="s1"> </span><span class="s13">EXCELLENT_SCORE</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span>statusInfo </span><span class="s8">=</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">                    </span>cardClass</span><span class="s8">:</span><span class="s5"> </span><span class="s1">'bg-blue-100 text-blue-800 border border-blue-200'</span><span class="s8">,</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>barClass</span><span class="s8">:</span><span class="s1"> </span><span class="s9">'bg-blue-500'</span><span class="s8">,</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>icon</span><span class="s8">:</span><span class="s1"> </span><span class="s9">'🎉'</span><span class="s8">,</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>text</span><span class="s8">:</span><span class="s1"> </span><span class="s9">'ยอดเยี่ยมที่สุด!'</span><span class="s8">,</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">                    </span>desc</span><span class="s8">:</span><span class="s5"> </span><span class="s1">'คุณทำได้ดีเกินความคาดหมายจริงๆ สุดยอดไปเลย'</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">};</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span><span class="s1"> </span><span class="s12">else</span><span class="s1"> </span><span class="s12">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">overallScore </span><span class="s8">&gt;=</span><span class="s1"> </span><span class="s13">GOOD_SCORE</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span>statusInfo </span><span class="s8">=</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">                    </span>cardClass</span><span class="s8">:</span><span class="s5"> </span><span class="s1">'bg-green-100 text-green-800 border border-green-200'</span><span class="s8">,</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>barClass</span><span class="s8">:</span><span class="s1"> </span><span class="s9">'bg-green-500'</span><span class="s8">,</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>icon</span><span class="s8">:</span><span class="s1"> </span><span class="s9">'👍'</span><span class="s8">,</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>text</span><span class="s8">:</span><span class="s1"> </span><span class="s9">'ทำได้ดีมาก!'</span><span class="s8">,</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">                    </span>desc</span><span class="s8">:</span><span class="s5"> </span><span class="s1">'คะแนนอยู่ในเกณฑ์ดีเลย พัฒนาต่อไปนะ'</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">};</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span><span class="s1"> </span><span class="s12">else</span><span class="s1"> </span><span class="s12">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">overallScore </span><span class="s8">&gt;=</span><span class="s1"> </span><span class="s13">PASS_SCORE</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span>statusInfo </span><span class="s8">=</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">                    </span>cardClass</span><span class="s8">:</span><span class="s5"> </span><span class="s1">'bg-teal-100 text-teal-800 border border-teal-200'</span><span class="s8">,</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>barClass</span><span class="s8">:</span><span class="s1"> </span><span class="s9">'bg-teal-500'</span><span class="s8">,</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>icon</span><span class="s8">:</span><span class="s1"> </span><span class="s9">'✅'</span><span class="s8">,</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>text</span><span class="s8">:</span><span class="s1"> </span><span class="s9">'ผ่านเกณฑ์แล้ว'</span><span class="s8">,</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">                    </span>desc</span><span class="s8">:</span><span class="s5"> </span><span class="s1">'ยินดีด้วยนะ ครั้งหน้ามาทำคะแนนให้ดีขึ้นไปอีกกัน'</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">};</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span><span class="s1"> </span><span class="s12">else</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span>statusInfo </span><span class="s8">=</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">                    </span>cardClass</span><span class="s8">:</span><span class="s5"> </span><span class="s1">'bg-yellow-100 text-yellow-800 border border-yellow-200'</span><span class="s8">,</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>barClass</span><span class="s8">:</span><span class="s1"> </span><span class="s9">'bg-yellow-500'</span><span class="s8">,</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>icon</span><span class="s8">:</span><span class="s1"> </span><span class="s9">'📖'</span><span class="s8">,</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                    </span>text</span><span class="s8">:</span><span class="s1"> </span><span class="s9">'พยายามอีกนิดนะ'</span><span class="s8">,</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">                    </span>desc</span><span class="s8">:</span><span class="s5"> </span><span class="s1">`ต้องการอีกแค่ </span><span class="s8">${</span><span class="s13">PASS_SCORE</span><span class="s5"> </span><span class="s8">-</span><span class="s5"> overallScore</span><span class="s8">}</span><span class="s1"> คะแนนก็จะผ่านแล้ว สู้ๆ!`</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">};</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">// Apply Status</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">            </span>statusCard</span><span class="s8">.</span><span class="s5">className </span><span class="s8">=</span><span class="s5"> </span><span class="s1">`p-4 rounded-lg text-center mb-6 transition-colors duration-500 </span><span class="s8">${</span><span class="s5">statusInfo</span><span class="s8">.</span><span class="s5">cardClass</span><span class="s8">}</span><span class="s1">`</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>statusIcon</span><span class="s8">.</span><span class="s1">textContent </span><span class="s8">=</span><span class="s1"> statusInfo</span><span class="s8">.</span><span class="s1">icon</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>statusText</span><span class="s8">.</span><span class="s1">textContent </span><span class="s8">=</span><span class="s1"> statusInfo</span><span class="s8">.</span><span class="s1">text</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>statusDesc</span><span class="s8">.</span><span class="s1">textContent </span><span class="s8">=</span><span class="s1"> statusInfo</span><span class="s8">.</span><span class="s1">desc</span><span class="s8">;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">// Update Overall Score Gauge</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> percentage </span><span class="s8">=</span><span class="s1"> </span><span class="s8">(</span><span class="s1">overallScore </span><span class="s8">/</span><span class="s1"> </span><span class="s13">MAX_OVERALL</span><span class="s8">)</span><span class="s1"> </span><span class="s8">*</span><span class="s1"> </span><span class="s14">100</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>overallScoreText</span><span class="s8">.</span><span class="s1">innerHTML </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">overallScore</span><span class="s8">}</span><span class="s9">&lt;span class="text-2xl text-gray-400"&gt;/</span><span class="s8">${</span><span class="s13">MAX_OVERALL</span><span class="s8">}</span><span class="s9">&lt;/span&gt;`</span><span class="s8">;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>scoreBar</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">width </span><span class="s8">=</span><span class="s1"> </span><span class="s9">`</span><span class="s8">${</span><span class="s1">percentage</span><span class="s8">}</span><span class="s9">%`</span><span class="s8">;</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">            </span>scoreBar</span><span class="s8">.</span><span class="s5">className </span><span class="s8">=</span><span class="s5"> </span><span class="s1">`h-8 rounded-full transition-all duration-1000 ease-out </span><span class="s8">${</span><span class="s5">statusInfo</span><span class="s8">.</span><span class="s5">barClass</span><span class="s8">}</span><span class="s1">`</span><span class="s8">;</span></p>
-<p class="p7"><span class="s3"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">// Update Sub Scores</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">            </span>objScoreEl</span><span class="s8">.</span><span class="s5">innerHTML </span><span class="s8">=</span><span class="s5"> </span><span class="s1">`</span><span class="s8">${</span><span class="s5">objScore</span><span class="s8">}</span><span class="s1">&lt;span class="text-lg text-gray-400"&gt;/</span><span class="s8">${</span><span class="s13">MAX_OBJ</span><span class="s8">}</span><span class="s1">&lt;/span&gt;`</span><span class="s8">;</span></p>
-<p class="p8"><span class="s5"><span class="Apple-converted-space">            </span>subScoreEl</span><span class="s8">.</span><span class="s5">innerHTML </span><span class="s8">=</span><span class="s5"> </span><span class="s1">`</span><span class="s8">${</span><span class="s5">subScore</span><span class="s8">}</span><span class="s1">&lt;span class="text-lg text-gray-400"&gt;/</span><span class="s8">${</span><span class="s13">MAX_SUB</span><span class="s8">}</span><span class="s1">&lt;/span&gt;`</span><span class="s8">;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">// Show results</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>lookupView</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">add</span><span class="s8">(</span><span class="s9">'hidden'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span>resultsView</span><span class="s8">.</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">remove</span><span class="s8">(</span><span class="s9">'hidden'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s4">&lt;/</span><span class="s1">script</span><span class="s4">&gt;</span></p>
-<p class="p1"><span class="s4">&lt;/</span><span class="s1">body</span><span class="s4">&gt;</span></p>
-<p class="p10"><span class="s15">&lt;/</span><span class="s3">html</span><span class="s15">&gt;</span></p>
+<body class="text-gray-800">
+
+    <div class="min-h-screen flex flex-col items-center justify-center p-4">
+
+        <!-- View 1: Lookup Form -->
+        <div id="lookup-view" class="w-full max-w-md">
+            <div class="bg-white p-8 md:p-10 rounded-xl shadow-sm border border-gray-200">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">ตรวจสอบผลการเรียน</h1>
+                    <p class="text-gray-500 mt-2">กรุณากรอกรหัสประจำตัวเพื่อดูผลคะแนนของคุณ</p>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label for="studentIdInput" class="sr-only">รหัสประจำตัว</label>
+                        <input type="text" id="studentIdInput" class="w-full text-center text-lg p-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition" placeholder="กรอกรหัสที่นี่">
+                    </div>
+                    <button id="checkScoreBtn" class="w-full py-3 px-4 bg-blue-600 text-white font-bold text-lg rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 btn">
+                        แสดงผลคะแนน
+                    </button>
+                </div>
+                <div id="errorMessage" class="mt-4 text-center text-red-600 font-semibold"></div>
+            </div>
+        </div>
+
+        <!-- View 2: Results Dashboard -->
+        <div id="results-view" class="w-full max-w-lg hidden">
+             <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-200">
+                <div class="text-center mb-4">
+                    <p class="text-gray-500">ผลการเรียนของ</p>
+                    <h2 id="studentName" class="text-3xl font-bold text-gray-800 mt-1"></h2>
+                </div>
+
+                <!-- Status Card -->
+                <div id="status-card" class="p-4 rounded-lg text-center mb-6 transition-colors duration-500">
+                    <p id="status-icon" class="text-3xl"></p>
+                    <p id="status-text" class="text-xl font-bold mt-1"></p>
+                    <p id="status-desc" class="text-sm"></p>
+                </div>
+                
+                <!-- Overall Score Section -->
+                <div class="text-center my-6">
+                    <p class="text-lg font-semibold text-gray-600">คะแนนรวม</p>
+                    <p id="overallScoreText" class="text-6xl font-extrabold text-gray-800"></p>
+                    
+                    <!-- Gauge -->
+                    <div class="w-full bg-gray-200 rounded-full h-8 relative mt-3">
+                        <div id="score-bar" class="h-8 rounded-full transition-all duration-1000 ease-out"></div>
+                        <div class="absolute top-0 bottom-0 border-l-2 border-gray-400 border-dashed" style="left: 50%;">
+                             <span class="absolute -bottom-6 text-xs font-semibold text-gray-500" style="left: -18px;">ผ่านครึ่ง</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub Scores -->
+                <div class="mt-8 grid grid-cols-2 gap-4">
+                    <div class="p-4 bg-gray-100 rounded-lg text-center border">
+                        <p class="text-md font-semibold text-gray-600">คะแนนปรนัย</p>
+                        <p id="objScore" class="text-2xl font-bold text-gray-800 mt-1"></p>
+                    </div>
+                    <div class="p-4 bg-gray-100 rounded-lg text-center border">
+                        <p class="text-md font-semibold text-gray-600">คะแนนอัตนัย</p>
+                        <p id="subScore" class="text-2xl font-bold text-gray-800 mt-1"></p>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button id="searchAgainBtn" class="py-2 px-6 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 btn">
+                        ค้นหาอีกครั้ง
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbySoCLTmYtHZEdfDZY_nbjPtZSpSMfxN-J_ZYRP6HBY3NmixeKgoH8JfZ7utIMDIO_P/exec';
+
+        // Views
+        const lookupView = document.getElementById('lookup-view');
+        const resultsView = document.getElementById('results-view');
+        
+        // Lookup Elements
+        const studentIdInput = document.getElementById('studentIdInput');
+        const checkScoreBtn = document.getElementById('checkScoreBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const searchAgainBtn = document.getElementById('searchAgainBtn');
+
+        // Results Elements
+        const studentNameEl = document.getElementById('studentName');
+        const statusCard = document.getElementById('status-card');
+        const statusIcon = document.getElementById('status-icon');
+        const statusText = document.getElementById('status-text');
+        const statusDesc = document.getElementById('status-desc');
+        const overallScoreText = document.getElementById('overallScoreText');
+        const scoreBar = document.getElementById('score-bar');
+        const objScoreEl = document.getElementById('objScore');
+        const subScoreEl = document.getElementById('subScore');
+
+        checkScoreBtn.addEventListener('click', handleFetchData);
+        studentIdInput.addEventListener('keyup', (event) => { if (event.key === 'Enter') handleFetchData(); });
+        searchAgainBtn.addEventListener('click', resetView);
+
+        function resetView() {
+            resultsView.classList.add('hidden');
+            lookupView.classList.remove('hidden');
+            studentIdInput.value = '';
+            errorMessage.textContent = '';
+        }
+
+        function handleFetchData() {
+            const studentId = studentIdInput.value.trim();
+            if (!studentId) {
+                errorMessage.textContent = 'กรุณากรอกรหัสประจำตัว';
+                return;
+            }
+            fetchData(studentId);
+        }
+
+        async function fetchData(studentId) {
+            checkScoreBtn.disabled = true;
+            checkScoreBtn.innerHTML = `<div class="flex items-center justify-center"><div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>กำลังตรวจสอบ...</div>`;
+            errorMessage.textContent = '';
+
+            try {
+                const response = await fetch(`${SCRIPT_URL}?id=${studentId}`);
+                const result = await response.json();
+                if (result.error) {
+                    displayError(result.error);
+                } else if (result.data) {
+                    displayResult(result.data);
+                } else {
+                    displayError('ไม่พบข้อมูลสำหรับรหัสนี้');
+                }
+            } catch (error) {
+                displayError('ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้');
+            } finally {
+                checkScoreBtn.disabled = false;
+                checkScoreBtn.innerHTML = 'แสดงผลคะแนน';
+            }
+        }
+
+        function displayError(message) {
+            errorMessage.textContent = message;
+        }
+
+        function displayResult(data) {
+            const MAX_OBJ = 5, MAX_SUB = 5, MAX_OVERALL = 10;
+            const EXCELLENT_SCORE = 8, GOOD_SCORE = 6, PASS_SCORE = 5;
+
+            const objScore = Number(data.obj) || 0;
+            const subScore = Number(data.sub) || 0;
+            const overallScore = Number(data.overall) || 0;
+
+            // Update Name
+            studentNameEl.textContent = `${data.name || ''} ${data.last || ''}`;
+
+            // Tiered Feedback Logic
+            let statusInfo = {};
+            if (overallScore >= EXCELLENT_SCORE) {
+                statusInfo = {
+                    cardClass: 'bg-blue-100 text-blue-800 border border-blue-200',
+                    barClass: 'bg-blue-500',
+                    icon: '🎉',
+                    text: 'ยอดเยี่ยมที่สุด!',
+                    desc: 'คุณทำได้ดีเกินความคาดหมายจริงๆ สุดยอดไปเลย'
+                };
+            } else if (overallScore >= GOOD_SCORE) {
+                statusInfo = {
+                    cardClass: 'bg-green-100 text-green-800 border border-green-200',
+                    barClass: 'bg-green-500',
+                    icon: '👍',
+                    text: 'ทำได้ดีมาก!',
+                    desc: 'คะแนนอยู่ในเกณฑ์ดีเลย พัฒนาต่อไปนะ'
+                };
+            } else if (overallScore >= PASS_SCORE) {
+                statusInfo = {
+                    cardClass: 'bg-teal-100 text-teal-800 border border-teal-200',
+                    barClass: 'bg-teal-500',
+                    icon: '✅',
+                    text: 'ผ่านเกณฑ์แล้ว',
+                    desc: 'ยินดีด้วยนะ ครั้งหน้ามาทำคะแนนให้ดีขึ้นไปอีกกัน'
+                };
+            } else {
+                statusInfo = {
+                    cardClass: 'bg-yellow-100 text-yellow-800 border border-yellow-200',
+                    barClass: 'bg-yellow-500',
+                    icon: '📖',
+                    text: 'พยายามอีกนิดนะ',
+                    desc: `ต้องการอีกแค่ ${PASS_SCORE - overallScore} คะแนนก็จะผ่านแล้ว สู้ๆ!`
+                };
+            }
+
+            // Apply Status
+            statusCard.className = `p-4 rounded-lg text-center mb-6 transition-colors duration-500 ${statusInfo.cardClass}`;
+            statusIcon.textContent = statusInfo.icon;
+            statusText.textContent = statusInfo.text;
+            statusDesc.textContent = statusInfo.desc;
+
+            // Update Overall Score Gauge
+            const percentage = (overallScore / MAX_OVERALL) * 100;
+            overallScoreText.innerHTML = `${overallScore}<span class="text-2xl text-gray-400">/${MAX_OVERALL}</span>`;
+            scoreBar.style.width = `${percentage}%`;
+            scoreBar.className = `h-8 rounded-full transition-all duration-1000 ease-out ${statusInfo.barClass}`;
+
+            // Update Sub Scores
+            objScoreEl.innerHTML = `${objScore}<span class="text-lg text-gray-400">/${MAX_OBJ}</span>`;
+            subScoreEl.innerHTML = `${subScore}<span class="text-lg text-gray-400">/${MAX_SUB}</span>`;
+            
+            // Show results
+            lookupView.classList.add('hidden');
+            resultsView.classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
