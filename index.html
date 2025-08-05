@@ -26,6 +26,16 @@
         .btn:active {
             transform: scale(0.98);
         }
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: .65em auto;
+            padding-right: 2.5rem;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -37,14 +47,27 @@
             <div class="bg-white p-8 md:p-10 rounded-xl shadow-sm border border-gray-200">
                 <div class="text-center mb-8">
                     <h1 class="text-3xl font-bold text-gray-900">ตรวจสอบคะแนนสอบกลางภาค</h1>
-                    <p class="text-gray-500 mt-2">กรุณากรอกรหัสประจำตัวเพื่อดูผลคะแนนของคุณ</p>
+                    <p class="text-gray-500 mt-2">กรุณาเลือกวิชาและกรอกรหัสประจำตัว</p>
                 </div>
                 <div class="space-y-4">
                     <div>
-                        <label for="studentIdInput" class="sr-only">รหัสประจำตัว</label>
+                        <label for="subjectSelect" class="block text-sm font-medium text-gray-700 mb-2">เลือกวิชา</label>
+                        <select id="subjectSelect" class="w-full text-lg p-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition">
+                            <option value="">-- กรุณาเลือกวิชา --</option>
+                            <option value="scibio">วิทยาศาสตร์ชีวภาพ</option>
+                            <option value="bio1">ชีววิทยา 1</option>
+                            <option value="bio3">ชีววิทยา 3</option>
+                            <option value="bio5">ชีววิทยา 5</option>
+                            <option value="sci2-1">วิทยาศาสตร์ ม. 2/1</option>
+                            <option value="sci2-2">วิทยาศาสตร์ ม. 2/2</option>
+                            <option value="sci2-3">วิทยาศาสตร์ ม. 2/3</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="studentIdInput" class="block text-sm font-medium text-gray-700 mb-2">รหัสประจำตัว</label>
                         <input type="text" id="studentIdInput" class="w-full text-center text-lg p-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition" placeholder="กรอกรหัสที่นี่">
                     </div>
-                    <button id="checkScoreBtn" class="w-full py-3 px-4 bg-blue-600 text-white font-bold text-lg rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 btn">
+                    <button id="checkScoreBtn" class="w-full py-3 px-4 bg-blue-600 text-white font-bold text-lg rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 btn !mt-6">
                         แสดงผลคะแนน
                     </button>
                 </div>
@@ -56,23 +79,21 @@
         <div id="results-view" class="w-full max-w-lg hidden">
              <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-200">
                 <div class="text-center mb-4">
+                    <p id="subjectName" class="text-xl font-semibold text-gray-500"></p>
                     <p class="text-gray-500">คะแนนสอบกลางภาคของ</p>
                     <h2 id="studentName" class="text-3xl font-bold text-gray-800 mt-1"></h2>
                 </div>
 
-                <!-- Status Card -->
                 <div id="status-card" class="p-4 rounded-lg text-center mb-6 transition-colors duration-500">
                     <p id="status-icon" class="text-3xl"></p>
                     <p id="status-text" class="text-xl font-bold mt-1"></p>
                     <p id="status-desc" class="text-sm"></p>
                 </div>
                 
-                <!-- Overall Score Section -->
                 <div class="text-center my-6">
                     <p class="text-lg font-semibold text-gray-600">คะแนนรวม</p>
                     <p id="overallScoreText" class="text-6xl font-extrabold text-gray-800"></p>
                     
-                    <!-- Gauge -->
                     <div class="w-full bg-gray-200 rounded-full h-8 relative mt-3">
                         <div id="score-bar" class="h-8 rounded-full transition-all duration-1000 ease-out"></div>
                         <div class="absolute top-0 bottom-0 border-l-2 border-gray-400 border-dashed" style="left: 50%;">
@@ -81,7 +102,6 @@
                     </div>
                 </div>
 
-                <!-- Sub Scores -->
                 <div class="mt-8 grid grid-cols-2 gap-4">
                     <div class="p-4 bg-gray-100 rounded-lg text-center border">
                         <p class="text-md font-semibold text-gray-600">คะแนนปรนัย</p>
@@ -103,7 +123,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbySoCLTmYtHZEdfDZY_nbjPtZSpSMfxN-J_ZYRP6HBY3NmixeKgoH8JfZ7utIMDIO_P/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9Vxwpcki4Kloctyw9Gyp9qPvzpMtBRKb8ZYRh59aznA_YajlL0GucgDpQdpR0-hNexw/exec';
 
         // Views
         const lookupView = document.getElementById('lookup-view');
@@ -111,12 +131,14 @@
         
         // Lookup Elements
         const studentIdInput = document.getElementById('studentIdInput');
+        const subjectSelect = document.getElementById('subjectSelect');
         const checkScoreBtn = document.getElementById('checkScoreBtn');
         const errorMessage = document.getElementById('errorMessage');
         const searchAgainBtn = document.getElementById('searchAgainBtn');
 
         // Results Elements
         const studentNameEl = document.getElementById('studentName');
+        const subjectNameEl = document.getElementById('subjectName');
         const statusCard = document.getElementById('status-card');
         const statusIcon = document.getElementById('status-icon');
         const statusText = document.getElementById('status-text');
@@ -134,32 +156,51 @@
             resultsView.classList.add('hidden');
             lookupView.classList.remove('hidden');
             studentIdInput.value = '';
+            subjectSelect.value = '';
             errorMessage.textContent = '';
         }
 
         function handleFetchData() {
             const studentId = studentIdInput.value.trim();
+            const selectedSubject = subjectSelect.value;
+
+            if (!selectedSubject) {
+                errorMessage.textContent = 'กรุณาเลือกวิชา';
+                return;
+            }
             if (!studentId) {
                 errorMessage.textContent = 'กรุณากรอกรหัสประจำตัว';
                 return;
             }
-            fetchData(studentId);
+            fetchData(studentId, selectedSubject);
         }
 
-        async function fetchData(studentId) {
+        async function fetchData(studentId, subject) {
             checkScoreBtn.disabled = true;
             checkScoreBtn.innerHTML = `<div class="flex items-center justify-center"><div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>กำลังตรวจสอบ...</div>`;
             errorMessage.textContent = '';
 
+            const url = `${SCRIPT_URL}?id=${studentId}&sheetName=${encodeURIComponent(subject)}`;
+
             try {
-                const response = await fetch(`${SCRIPT_URL}?id=${studentId}`);
+                const response = await fetch(url);
                 const result = await response.json();
+                
+                // --- NEW ERROR HANDLING LOGIC ---
                 if (result.error) {
-                    displayError(result.error);
+                    if (result.error === 'ID_NOT_FOUND') {
+                        displayError('รหัสประจำตัวหรือวิชาที่เลือกอาจไม่ถูกต้อง');
+                    } else if (result.error === 'SCORE_MISSING') {
+                        displayError('ยังไม่ได้บันทึกคะแนนในวิชานี้ กรุณาติดต่อครูผู้สอน');
+                    } else {
+                        // Handle other potential errors from the script
+                        displayError(result.error);
+                    }
                 } else if (result.data) {
                     displayResult(result.data);
                 } else {
-                    displayError('ไม่พบข้อมูลสำหรับรหัสนี้');
+                    // Fallback for an unexpected response structure
+                    displayError('การตอบกลับจากเซิร์ฟเวอร์ไม่ถูกต้อง');
                 }
             } catch (error) {
                 displayError('ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้');
@@ -180,44 +221,24 @@
             const objScore = Number(data.obj) || 0;
             const subScore = Number(data.sub) || 0;
             const overallScore = Number(data.overall) || 0;
+            
+            const selectedOption = subjectSelect.options[subjectSelect.selectedIndex];
+            const subjectDisplayName = selectedOption.text;
 
-            // Update Name
+            // Update Names
             studentNameEl.textContent = `${data.name || ''} ${data.last || ''}`;
+            subjectNameEl.textContent = `วิชา: ${subjectDisplayName}`;
 
             // Tiered Feedback Logic
             let statusInfo = {};
             if (overallScore >= EXCELLENT_SCORE) {
-                statusInfo = {
-                    cardClass: 'bg-blue-100 text-blue-800 border border-blue-200',
-                    barClass: 'bg-blue-500',
-                    icon: '🎉',
-                    text: 'ยอดเยี่ยมที่สุด!',
-                    desc: 'คุณทำได้ดีเกินความคาดหมายจริงๆ สุดยอดไปเลย'
-                };
+                statusInfo = { cardClass: 'bg-blue-100 text-blue-800 border-blue-200', barClass: 'bg-blue-500', icon: '🎉', text: 'ยอดเยี่ยมที่สุด!', desc: 'คุณทำได้ดีเกินความคาดหมายจริงๆ สุดยอดไปเลย' };
             } else if (overallScore >= GOOD_SCORE) {
-                statusInfo = {
-                    cardClass: 'bg-green-100 text-green-800 border border-green-200',
-                    barClass: 'bg-green-500',
-                    icon: '👍',
-                    text: 'ทำได้ดีมาก!',
-                    desc: 'คะแนนอยู่ในเกณฑ์ดีเลย พัฒนาต่อไปนะ'
-                };
+                statusInfo = { cardClass: 'bg-green-100 text-green-800 border-green-200', barClass: 'bg-green-500', icon: '👍', text: 'ทำได้ดีมาก!', desc: 'คะแนนอยู่ในเกณฑ์ดีเลย พัฒนาต่อไปนะ' };
             } else if (overallScore >= PASS_SCORE) {
-                statusInfo = {
-                    cardClass: 'bg-teal-100 text-teal-800 border border-teal-200',
-                    barClass: 'bg-teal-500',
-                    icon: '✅',
-                    text: 'ผ่านเกณฑ์แล้ว',
-                    desc: 'ยินดีด้วยนะ ครั้งหน้ามาทำคะแนนให้ดีขึ้นไปอีกกัน'
-                };
+                statusInfo = { cardClass: 'bg-teal-100 text-teal-800 border-teal-200', barClass: 'bg-teal-500', icon: '✅', text: 'ผ่านเกณฑ์แล้ว', desc: 'ยินดีด้วยนะ ครั้งหน้ามาทำคะแนนให้ดีขึ้นไปอีกกัน' };
             } else {
-                statusInfo = {
-                    cardClass: 'bg-yellow-100 text-yellow-800 border border-yellow-200',
-                    barClass: 'bg-yellow-500',
-                    icon: '📖',
-                    text: 'พยายามอีกนิดนะ',
-                    desc: `ต้องการอีกแค่ ${PASS_SCORE - overallScore} คะแนนก็จะผ่านแล้ว สู้ๆ!`
-                };
+                statusInfo = { cardClass: 'bg-yellow-100 text-yellow-800 border-yellow-200', barClass: 'bg-yellow-500', icon: '📖', text: 'พยายามอีกนิดนะ', desc: `ต้องการอีกแค่ ${PASS_SCORE - overallScore} คะแนนก็จะผ่านแล้ว สู้ๆ!` };
             }
 
             // Apply Status
